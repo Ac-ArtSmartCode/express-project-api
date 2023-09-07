@@ -26,15 +26,19 @@ exports.get = tryCatch(async (req, res, next) => {
   });
   if (!product)
     return res.status(204).send({ error: true, message: "ไม่พบสินค้า" });
-  return res.status(200).send({ data: doc });
+  return res
+    .status(200)
+    .send({ error: false, message: "สินค้าทั้งหมด", data: doc });
 });
 exports.getById = tryCatch(async (req, res) => {
   const { id } = req.params;
   const product = await Product.findById(id);
   product.img_url = imageUtils(product.prod_image);
   if (!product)
-    return res.status(204).send({ error: true, message: "ไม่พบสินค้า" });
-  return res.status(200).send({ data: product });
+    return res.status(409).send({ error: true, message: "ไม่พบสินค้า" });
+  return res
+    .status(200)
+    .send({ error: false, message: "สินค้ารายละเอียด", data: product });
 });
 
 exports.delete = tryCatch(async (req, res) => {

@@ -28,5 +28,7 @@ exports.getById = tryCatch(async (req, res) => {
     throw res
       .status(409)
       .send({ error: true, message: "ไม่มีคอมเมนท์ในขณะนี้.." });
-  return res.status(200).send({ data: comment });
+  return res
+    .status(200)
+    .send({ error: false, message: "คอมเมนท์", data: comment });
 });

@@ -40,7 +40,9 @@ exports.get = tryCatch(async (req, res) => {
     throw res
       .status(400)
       .send({ error: true, message: "ไม่พบสินค้าในตะกร้า.." });
-  return res.status(200).json({ data: shopcart });
+  return res
+    .status(200)
+    .json({ error: false, message: "ตะกร้าสินค้า", data: shopcart });
 });
 
 exports.edit = tryCatch(async (req, res) => {
