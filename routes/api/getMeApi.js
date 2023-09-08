@@ -1,6 +1,7 @@
 const { authen } = require("../../middleware/authen");
 const userModels = require("../../models/userModels");
 const jwt = require("jsonwebtoken");
+const { imageUtils } = require("../../utils/getImage");
 const router = require("express").Router();
 router.get("/", authen, async (req, res, next) => {
   const token = req.headers["x-access-token"];
@@ -8,6 +9,7 @@ router.get("/", authen, async (req, res, next) => {
   const users = await userModels.findOne({ email: decoded.user.email });
   if (!users)
     throw res.status(409).send({ error: true, message: "เกิดข้อผิดพลาด" });
+  users.img_url = imageUtils(users.images);
   res.status(200).send({ error: false, message: "ข้อมูลผู้ใช้", data: users });
 });
 module.exports = router;
